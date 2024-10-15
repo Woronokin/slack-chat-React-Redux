@@ -2,9 +2,9 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "Simply React app chat (Slack)",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "build": "run build --prefix frontend",
+    "build": "npm run build --prefix frontend",
     "start": "npx start-server -s ./frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd frontend && npm ci"
