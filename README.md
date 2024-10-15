@@ -19,4 +19,4 @@
 
 
 ## Демонстрация проекта:
-Для просмотра проекта перейдите [по ссылке](https://frontend-project-12-yveb.onrender.com)
+Для просмотра проекта перейдите [по ссылке](https://frontend-project-12-9dd4.onrender.com)
