@@ -6,12 +6,13 @@ import { useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { useUpdateChannelMutation } from '../../api/channels';
-import { changeChannel } from '../../store/slices/appSlice';
 
 const RenameChannel = (props) => {
+  const { t } = useTranslation();
   const {
-    handleCloseModal, showModal, modalChannelId, dispatch, channelNameSchema, t,
+    handleCloseModal, showModal, modalChannelId, channelNameSchema,
   } = props;
   const input = useRef();
   const [updateChannel] = useUpdateChannelMutation();
@@ -27,7 +28,6 @@ const RenameChannel = (props) => {
       };
       await updateChannel(data).unwrap();
       handleCloseModal();
-      dispatch(changeChannel({ id: channelId, name: channelName }));
       toast.success(t('toast.renameChannel'));
     } catch (e) {
       console.error(e);
@@ -47,6 +47,7 @@ const RenameChannel = (props) => {
       <Modal.Body>
         <Formik
           initialValues={{ channelName: modalChannelName, channelId: modalChannelId }}
+          validateOnChange={false}
           validationSchema={channelNameSchema}
           onSubmit={renameChannel}
         >

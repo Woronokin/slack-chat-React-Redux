@@ -14,6 +14,13 @@ const Messages = () => {
   const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const filteredMessages = messages.filter((message) => message.channelId === currentChannelId);
   const messagesContainer = useRef();
+
+  useEffect(() => {
+    if (messagesContainer.current) {
+      messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+    }
+  }, [messages]);
+
   useEffect(() => {
     const handleNewMessage = (newMessage) => {
       dispatch(messagesApi.util.updateQueryData('getMessages', undefined, (draft) => {
@@ -24,7 +31,7 @@ const Messages = () => {
     return () => {
       socket.off('newMessage');
     };
-  }, [dispatch, messagesContainer]);
+  }, [dispatch]);
   return (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -35,9 +42,7 @@ const Messages = () => {
             </b>
           </p>
           <span className="text-muted">
-            {filteredMessages.length}
-            {' '}
-            {t('messages.messages')}
+            {t('messages', { count: filteredMessages.length })}
           </span>
         </div>
         <div className="overflow-auto px-5" ref={messagesContainer}>

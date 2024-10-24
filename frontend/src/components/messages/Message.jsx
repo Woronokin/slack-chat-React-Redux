@@ -6,6 +6,7 @@ import { Send } from 'react-bootstrap-icons';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 import { useAddMessageMutation } from '../../api/messages';
 
 const Message = () => {
@@ -13,43 +14,54 @@ const Message = () => {
   const username = useSelector((state) => state.app.username);
   const [addMessage] = useAddMessageMutation();
   const { t } = useTranslation();
-  const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      const { message } = values;
-      const data = {
-        message: filter.clean(message),
-        channelId: currentChannelId,
-        username,
-      };
-      await addMessage(data);
-      resetForm();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setSubmitting(false);
-    }
+  const messageSchema = Yup.object().shape({
+    message: Yup.string().required(t('form.errors.required')),
+  });
+  const handleFormSubmit = async (values, { resetForm }) => {
+    const { message } = values;
+    const data = {
+      message: filter.clean(message),
+      channelId: currentChannelId,
+      username,
+    };
+    await addMessage(data).unwrap()
+      .then(() => {
+        resetForm();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
     <div className="mt-auto py-3 px-5">
-      <Formik initialValues={{ message: '' }} onSubmit={handleFormSubmit}>
-        {({ handleSubmit, handleChange, values }) => (
+      <Formik
+        initialValues={{ message: '' }}
+        onSubmit={handleFormSubmit}
+        validateOnChange={false}
+        validationSchema={messageSchema}
+      >
+        {({
+          handleSubmit, handleChange, values, errors,
+        }) => (
           <Form onSubmit={handleSubmit}>
             <InputGroup>
-              <Form.Label htmlFor="new-message" hidden>{t('form.labels.message')}</Form.Label>
+              <Form.Label htmlFor="newMessage" hidden>{t('form.labels.message')}</Form.Label>
               <Form.Control
                 placeholder={t('form.placeholders.message')}
                 autoFocus
-                id="new-message"
+                id="newMessage"
                 aria-label={t('form.placeholders.message')}
                 value={values.message}
                 onChange={handleChange}
+                isInvalid={!!errors.message}
                 type="text"
                 name="message"
               />
               <Button type="submit">
                 <Send />
               </Button>
+              <Form.Control.Feedback type="invalid">{errors.message}</Form.Control.Feedback>
             </InputGroup>
           </Form>
         )}
