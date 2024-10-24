@@ -14,9 +14,13 @@
 Для установки приложения следуйте простым шагам:
 1. Клонируйте репозиторий: `https://github.com/Woronokin/frontend-project-12.git`
 2. В корневом каталоге проекта: `npm ci` или `make install`
-3. 
+3. Запустите локальный сервер: `make start`
 
+####Дополнительные команды:
+* Запустить frontend: `make start-frontend`
+* Запустить оба режима в dev-mode: `make develop`
+* Сборка: `make build`
 
 
 ## Демонстрация проекта:
-Для просмотра проекта перейдите [по ссылке](https://frontend-project-12-9dd4.onrender.com)
+Для просмотра проекта перейдите [по ссылке](https://frontend-project-12-2-bgp5.onrender.com)
