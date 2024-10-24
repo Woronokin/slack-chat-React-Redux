@@ -12,7 +12,7 @@ import { appPaths } from './routes';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_TOKEN_ACCESS,
-  environment: 'production',
+  environment: 'testenv',
 };
 
 const App = () => (
