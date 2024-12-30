@@ -1,4 +1,4 @@
-### Hexlet tests and linter status:
+### Tests and linter status:
 [![Actions Status](https://github.com/Woronokin/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Woronokin/frontend-project-12/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/856d82154311c0821d48/maintainability)](https://codeclimate.com/github/Woronokin/frontend-project-12/maintainability)
 
